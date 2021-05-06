@@ -22,7 +22,7 @@
     </TypeIdentifier>
   </Class>
   <Enum Name="ConsoleAppProject.App02.WeightCategories">
-    <Position X="13.5" Y="3" Width="1.5" />
+    <Position X="13.75" Y="3" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAQAAAQAAIAABAAAAAAAAAAAAAAAAAEAAAAAAkAAAA=</HashCode>
       <FileName>App02\WeightCategory.cs</FileName>
