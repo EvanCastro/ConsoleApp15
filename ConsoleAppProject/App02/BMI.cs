@@ -24,7 +24,7 @@ namespace ConsoleAppProject.App02
         public const int IMPERIAL_FACTOR = 703;
 
         public double BMI_Index { get; set; }
-        public WeightCategory Category { get; set; }
+        public WeightCategories Category { get; set; }
 
         public double Height { get; set; }
         public double Weight { get; set; }
@@ -152,27 +152,27 @@ namespace ConsoleAppProject.App02
         {
             if (BMI_Index < 18.50)
             {
-                Category = WeightCategory.UnderWeight;
+                Category = WeightCategories.UnderWeight;
             }
             else if (BMI_Index > 18.5 && BMI_Index < 24.9)
             {
-                Category = WeightCategory.NormalWeight;
+                Category = WeightCategories.NormalWeight;
             }
             else if (BMI_Index > 25.0 && BMI_Index < 29.9)
             {
-                Category = WeightCategory.OverWeight;
+                Category = WeightCategories.OverWeight;
             }
             else if (BMI_Index > 30.00 && BMI_Index < 34.9)
             {
-                Category = WeightCategory.ObeseI;
+                Category = WeightCategories.ObeseI;
             }
             else if (BMI_Index > 35.0 && BMI_Index < 39.9)
             {
-                Category = WeightCategory.ObeseII;
+                Category = WeightCategories.ObeseII;
             }
             else if (BMI_Index >= 40.0)
             {
-                Category = WeightCategory.ObeseIII;
+                Category = WeightCategories.ObeseIII;
             }
 
             ConsoleHelper.OutputRed($"\n Your BMI index is {BMI_Index: 0.00}");
@@ -180,7 +180,7 @@ namespace ConsoleAppProject.App02
 
             ConsoleHelper.OutputRed("\n If you are Black, Asian, or other minority " +
                 "\n ethnic groups, you have a higher risk" +
-                "\n of developing some long-term " +
+                "\n of developing various long term " +
                 "\n conditions, such as type 2 diabetes. " +
                 "\n These adults with a BMI of:");
 
