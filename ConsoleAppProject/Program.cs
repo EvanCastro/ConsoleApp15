@@ -29,7 +29,8 @@ namespace ConsoleAppProject
             string[] choices = new string[]
             {
                 "Distance Coverter",
-                "BMI Calculator"
+                "BMI Calculator",
+                "Student Grades"
             };
 
             ConsoleHelper.OutputTitle("Please select the application you wish to use ");
@@ -42,8 +43,13 @@ namespace ConsoleAppProject
             }
             else if (choice == 2)
             {
-                BMI_Calculator calculator = new BMI_Calculator();
+                BMICalculator calculator = new BMICalculator();
                 calculator.Run();
+            }
+            else if(choice == 3)
+            {
+                StudentGrades grades = new StudentGrades();
+                grades.Run();
             }
 
         }

@@ -11,7 +11,7 @@ namespace ConsoleAppProject.App02
     /// <author>
     /// Evan Castro 01/05/2021
     /// </author>
-    public class BMI_Calculator
+    public class BMICalculator
     {
         public const string IMPERIAL = "Imperial";
         public const string METRIC = "Metric";

@@ -74,7 +74,7 @@ namespace ConsoleAppProject.Helpers
                 catch (Exception)
                 {
                     isValid = false;
-                    Console.WriteLine("Error: INVALID NUMBER!");
+                    Console.WriteLine("Error!");
                 }
 
             } while (!isValid);
@@ -174,7 +174,7 @@ namespace ConsoleAppProject.Helpers
             bool repeat = true;
             while (repeat)
             {
-                Console.WriteLine("\n Would you like to select"
+                Console.WriteLine("\n Would you like to choose"
                     + " another calculation? yes/no? > ");
                 string choice = Console.ReadLine();
 
