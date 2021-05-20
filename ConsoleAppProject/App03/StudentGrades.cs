@@ -4,8 +4,8 @@ using ConsoleAppProject.Helpers;
 namespace ConsoleAppProject.App03
 {
     /// <summary>
-    /// At the moment this class just tests the
-    /// Grades enumeration names and descriptions
+    /// This app allows the user to input each student's mark. 
+    /// The app will calculate the mark and convert it into a grade accordingly.
     /// Evan Castro 12/05/2021
     /// </summary>
 
@@ -27,11 +27,18 @@ namespace ConsoleAppProject.App03
         public int[] Marks { get; set; }
 
         //Variables to Store the Minimum, Mean and Maximum Mark
-        public double Mean = 0;
-        public int Minimum = 0;
-        public int Maximum = 0;
+        public double Mean { get; set; }
+
+        public int Minimum { get; set; }
+        public int Maximum { get; set; }
+        public int LowestMark { get; private set; }
 
         //Declares Students Names and the Lenght of the Marks Array
+        /// <summary>
+        /// This method stores the names of the students.
+        /// It allows the user to run various methods
+        /// such as inputmark, output mark grades, calculate stats and calculate grade profile.
+        /// </summary>
         public StudentGrades()
         {
             Students = new string[NoStudents]
@@ -42,21 +49,33 @@ namespace ConsoleAppProject.App03
             Marks = new int[Students.Length];
 
             InputMarks();
-        }
+            OutputMarks();
+            CalculateStats();
+            CalculateGradeProfile();
 
+        }
+        /// <summary>
+        /// This method will run the program.
+        /// it will output the heading
+        /// allows the user to make a choice whether they want to continue or not. 
+        /// </summary>
         public void Run()
         {
+            
             bool repeat = true;
             while (repeat)
             {
                 ConsoleHelper.OutputHeading("Student Grades");
-                UserChoice();
                 repeat = ConsoleHelper.WantToRepeat();
             }
         }
 
 
         //Insert Student Marks
+        /// <summary>
+        /// Allows the user to input the student's mark.
+        /// Marks can only hold the value between min and max.
+        /// </summary>
         public void InputMarks()
         {
             int mark, index = 0;
@@ -75,153 +94,124 @@ namespace ConsoleAppProject.App03
         }
 
         //Display Marks and Grades
-        public void OutputMarksGrades()
+        /// <summary>
+        /// This method displays the names of all students
+        /// also displays their mark as well as their class using enumeration.
+        /// </summary>
+        public void OutputMarks()
         {
-            Console.WriteLine("\nListing of Student Marks\n");
-            for (int index = 0; index < NoStudents; index++)
             {
-                if (Marks[index] >= LowestGradeA)
+                ConsoleHelper.OutputTitle(" Student Marks");
+
+                for (int index = 0; index < Students.Length; index++)
                 {
-                    Console.WriteLine("{0} scored {1} || A - First Class", Students[index], Marks[index]);
-                }
-                else if (Marks[index] >= LowestGradeB)
-                {
-                    Console.WriteLine("{0} scored {1} || B - Upper Second Class", Students[index], Marks[index]);
-                }
-                else if (Marks[index] >= LowestGradeC)
-                {
-                    Console.WriteLine("{0} scored {1} || C - Lower Second Class", Students[index], Marks[index]);
-                }
-                else if (Marks[index] >= LowestGradeD)
-                {
-                    Console.WriteLine("{0} scored {1} || D - Third Class", Students[index], Marks[index]);
-                }
-                else if (Marks[index] >= LowestGradeF)
-                {
-                    Console.WriteLine("{0} scored {1} || F - Fail", Students[index], Marks[index]);
+                    Grades grade = ConvertToGrade(Marks[index]);
+                    string name = EnumHelper<Grades>.GetName(grade);
+
+                    Console.WriteLine($" {Students[index]} {Marks[index]}% - Grade {grade} | {name}");
                 }
             }
-            Console.WriteLine();
-        }
-        //Display Student Grades Heading
-        public void DisplayHeading()
-        {
-            Console.WriteLine("-----------------------------------");
-            Console.WriteLine("        Students  Grades");
-            Console.WriteLine("         by Evan Castro");
-            Console.WriteLine("-----------------------------------\n");
         }
 
-        //Display App03 Choices
-        public void DisplayChoices()
+        /// <summary>
+        /// This method allows the convertion of student marks to grade
+        /// It ranges from F(fail) to A(first class)
+        /// </summary>
+        public Grades ConvertToGrade(int mark)
         {
-            Console.WriteLine("1. Mark Students");
-            Console.WriteLine("2. List Students (Mark and Grade)");
-            Console.WriteLine("3. Show Minimum, Mean and Maximum Mark");
-            Console.WriteLine("4. Show Grades Percentages");
-            Console.WriteLine("0. Quit");
-        }
-
-        //Show Minimum, Mean and Maximum Marks
-        public void MinMeanMaxMark()
-        {
-            Maximum = 0;
-            Minimum = 100;
-            for (int index = 0; index < NoStudents; index++)
+            if (mark >= LowestMark && mark < LowestGradeD)
             {
-                if (Marks[index] > Maximum)
-                {
-                    Maximum = Marks[index];
-                }
-                if (Marks[index] < Minimum)
-                {
-                    Minimum = Marks[index];
-                }
-                Mean += Marks[index];
+                return Grades.F;
             }
-
-            Mean /= NoStudents;
-
-            Console.WriteLine("\nMinimum Mark:{0} || Maximum Mark:{1} || Mean Mark:{2}\n", Minimum, Maximum, Mean);
-        }
-
-        //Calculate Every Grade Percentage
-        public void GradePercentages()
-        {
-            int A = 0;
-            int B = 0;
-            int C = 0;
-            int D = 0;
-            int F = 0;
-
-            for (int index = 0; index < NoStudents; index++)
+            else if (mark >= LowestGradeD && mark < LowestGradeC)
             {
-                if (Marks[index] >= LowestGradeA)
-                {
-                    A += 1;
-                }
-                else if (Marks[index] >= LowestGradeB)
-                {
-                    B += 1;
-                }
-                else if (Marks[index] >= LowestGradeC)
-                {
-                    C += 1;
-                }
-                else if (Marks[index] >= LowestGradeD)
-                {
-                    D += 1;
-                }
-                else if (Marks[index] >= LowestGradeF)
-                {
-                    F += 1;
-                }
+                return Grades.D;
             }
-
-            A *= 10;
-            B *= 10;
-            C *= 10;
-            D *= 10;
-            F *= 10;
-
-            Console.WriteLine("\nIndividual Grade Percentages:");
-            Console.WriteLine("\nA:{0}% B:{1}% C:{2}% D:{3}% F{4}%\n", A, B, C, D, F);
-        }
-
-        //User Selects What To Do
-        public void UserChoice()
-        {
-            DisplayHeading();
-            DisplayChoices();
-
-            int choice;
-            choice = Convert.ToInt32(Console.ReadLine());
-
-            if (choice == 1)
+            else if (mark >= LowestGradeC && mark < LowestGradeB)
             {
-                InputMarks();
+                return Grades.C;
             }
-            else if (choice == 2)
+            else if (mark >= LowestGradeB && mark < LowestGradeA)
             {
-                OutputMarksGrades();
+                return Grades.B;
             }
-            else if (choice == 3)
+            else if (mark >= LowestGradeA && mark <= HighestMark)
             {
-                MinMeanMaxMark();
-            }
-            else if (choice == 4)
-            {
-                GradePercentages();
-            }
-            else if (choice == 0)
-            {
-                Environment.Exit(0);
+                return Grades.A;
             }
             else
             {
-                Console.WriteLine("\nInvalid Input\n");
+                return Grades.None;
             }
-            UserChoice();
+        }
+
+        /// <summary>
+        /// This method sums the minimum and maximum and mean mark for all the students
+        /// Also outputs the mean mark for all the students
+        /// </summary>
+        public void CalculateStats()
+        {
+            double total = 0;
+
+            Minimum = HighestMark;
+            Maximum = 0;
+
+            foreach (int mark in Marks)
+            {
+                total = total + mark;
+                if (mark > Maximum) Maximum = mark;
+                if (mark < Minimum) Minimum = mark;
+            }
+            Mean = total / Marks.Length;
+            OutputStats();
+        }
+
+        /// <summary>
+        /// This method outputs the minimum, maximum and mean of the entirety of the students.
+        /// 
+        /// </summary>
+        private void OutputStats()
+        {
+            ConsoleHelper.OutputTitle(" Student Marks Statistics");
+            Console.WriteLine($" No. of students marked = {Marks.Length}");
+            Console.WriteLine($" Minimum mark = {Minimum}");
+            Console.WriteLine($" Mean mark = {Mean}");
+            Console.WriteLine($" Maximum mark = {Maximum}");
+        }
+
+        public void CalculateGradeProfile()
+        {
+            for (int i = 0; i < GradeProfile.Length; i++)
+            {
+                GradeProfile[i] = 0;
+            }
+
+            foreach (int mark in Marks)
+            {
+                Grades grade = ConvertToGrade(mark);
+                GradeProfile[(int)grade]++;
+            }
+
+            OutputGradeProfile();
+        }
+
+        /// <summary>
+        /// This will display percentage of students obtaining each grade
+        /// </summary>
+        private void OutputGradeProfile()
+        {
+            Grades grade = Grades.None;
+            ConsoleHelper.OutputYellow("\n Number of students that achieved " +
+                             "the following grades");
+
+            foreach (int count in GradeProfile)
+            {
+                int percentage = count * 100 / Marks.Length;
+                Console.WriteLine($" \n Grade {grade} - {percentage}% | Count {count}");
+                grade++;
+            }
+
+            Console.WriteLine();
         }
     }
 }

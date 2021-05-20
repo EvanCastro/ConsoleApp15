@@ -25,6 +25,7 @@ namespace ConsoleAppProject.App03
         B,
         [Display(Name = "1st")]
         [Description("BSc(Hons) First Class")]
-        A
+        A,
+        None
     }
 }
