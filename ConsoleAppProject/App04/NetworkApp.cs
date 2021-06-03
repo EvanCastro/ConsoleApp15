@@ -56,7 +56,7 @@ namespace ConsoleAppProject.App04
             ///Get user to type this information
             PhotoPost photoPost = new PhotoPost("Evan", "Photo.jpg", "Hello World");
             news.AddPhotoPost(photoPost);
-            Console.WriteLine("Posting an Image...");
+            Console.WriteLine("Posting an Image...\n");
 
             Console.Write("Type your username: ");
             string author = Console.ReadLine();
@@ -70,7 +70,7 @@ namespace ConsoleAppProject.App04
             PhotoPost post = new PhotoPost(author, filename, caption);
             news.AddPhotoPost(photoPost);
 
-            Console.WriteLine("You have succesfully posted a photo.");
+            Console.WriteLine("You have succesfully posted a photo.\n");
             post.Display();
 
 
@@ -79,7 +79,7 @@ namespace ConsoleAppProject.App04
         private void PostMessage()
         {
             ///User to enter information - placeholder for now
-            Console.WriteLine("Posting a message...");
+            Console.WriteLine("Posting a message...\n");
 
             Console.Write("Type your username: ");
             string author = Console.ReadLine();
@@ -90,7 +90,8 @@ namespace ConsoleAppProject.App04
             MessagePost post = new MessagePost(author, message);
             news.AddMessagePost(post);
 
-            Console.WriteLine("You have succesfully posted a message.");
+            Console.WriteLine("You have succesfully posted a message.\n");
+
             post.Display();
         }
 
@@ -99,10 +100,14 @@ namespace ConsoleAppProject.App04
         /// </summary>
         private void RemovePost()
         {
-            Console.WriteLine("Removing a post...");
-            Console.Write("Please enter your post id: ");
+            Console.WriteLine("Removing a post...\n");
+
+            Console.Write("Please enter your post id: \n");
+
             string value = Console.ReadLine();
+
             int id = Convert.ToInt32(value);
+
             news.RemovePost(id);
         }
 
@@ -111,9 +116,12 @@ namespace ConsoleAppProject.App04
         /// </summary>
         private void DisplayByAuthor()
         {
-            Console.WriteLine("Displaying authors posts...");
-            Console.Write("Please enter authors username: ");
+            Console.WriteLine("Displaying authors posts...\n");
+
+            Console.Write("Please enter authors username: \n");
+
             string username = Console.ReadLine();
+
             news.DisplayAuthor(username);
         }
         /// <summary>
@@ -121,10 +129,14 @@ namespace ConsoleAppProject.App04
         /// </summary>
         private void DisplayByTime()
         {
-            Console.WriteLine("Displaying posts by time...");
-            Console.Write("Please enter time elapsed (in seconds) for a post: ");
+            Console.WriteLine("Displaying posts by time...\n");
+
+            Console.Write("Please enter time elapsed (in seconds) for a post: \n");
+
             string value = Console.ReadLine();
+
             int time = Convert.ToInt32(value);
+
             news.DisplayByTime(time);
         }
 
@@ -133,10 +145,14 @@ namespace ConsoleAppProject.App04
         /// </summary>
         private void AddComment()
         {
-            Console.WriteLine("Adding a comment...");
-            Console.Write("Please enter post id: ");
+            Console.WriteLine("Adding a comment...\n");
+
+            Console.Write("Please enter post id: \n");
+
             string value = Console.ReadLine();
+
             int id = Convert.ToInt32(value);
+
             news.AddComment(id);
         }
 
@@ -145,9 +161,12 @@ namespace ConsoleAppProject.App04
         /// </summary>
         private void LikePost()
         {
-            Console.Write("Please enter post id: ");
+            Console.Write("Please enter post id: \n");
+
             string value = Console.ReadLine();
+
             int id = Convert.ToInt32(value);
+
             news.LikePost(id);
         }
     }
