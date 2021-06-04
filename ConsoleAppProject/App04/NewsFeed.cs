@@ -34,7 +34,7 @@ namespace ConsoleAppProject.App04
             MessagePost post = new MessagePost("Evan", "This is the very first Evan's post(beta)");
             AddMessagePost(post);
 
-            PhotoPost photoPost = new PhotoPost("Evan", "NewsFeedPhoto1.jpg", "Omg i just posted my first pic");
+            PhotoPost photoPost = new PhotoPost("Evan", "Photo.jpg", "Omg i just posted my first pic");
             AddPhotoPost(photoPost);
 
             MessagePost post2 = new MessagePost("Evan", "This post is No 2");
@@ -201,7 +201,7 @@ namespace ConsoleAppProject.App04
                 if (postNo == i + 1)
                 {
                     post.Unlike();
-                    Console.WriteLine($"PostNº [{postNo}] UN-liked");
+                    Console.WriteLine($"PostNº [{postNo}] disliked");
                     Console.WriteLine();
                     unlikedPost = true;
                     break;
@@ -209,7 +209,7 @@ namespace ConsoleAppProject.App04
                 i++;
             }
 
-            if (!unlikedPost)//not sure it this validation is necessary
+            if (!unlikedPost)
             {
                 Console.WriteLine($"PostNº [{postNo}] not found!");
                 ErrorDetected = true;

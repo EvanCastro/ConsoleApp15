@@ -5,7 +5,8 @@ using ConsoleAppProject.Helpers;
 namespace ConsoleAppProject.App04
 {
     /// <summary>
-    /// 
+    /// Allows the newsfeed to be displayed
+    /// runs the newsfeed
     /// </summary>
     public class NetworkApp
     {
@@ -14,7 +15,9 @@ namespace ConsoleAppProject.App04
         Boolean ErrorDetected = false;
 
 
-
+        /// <summary>
+        /// Display the menu for the newsfeed
+        /// </summary>
         public void DisplayMenu()
         {
             ConsoleHelper.OutputHeading(" Evan's News feed  ");
@@ -135,7 +138,7 @@ namespace ConsoleAppProject.App04
         }
 
         /// <summary>
-        /// searchs for posts from a given author
+        /// Allows user to search post via Author
         /// </summary>
         /// <param name="author"></param>
         public void SearchByAuthor(string author)
