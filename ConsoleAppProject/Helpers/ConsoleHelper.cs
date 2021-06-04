@@ -24,16 +24,52 @@ namespace ConsoleAppProject.Helpers
         /// </summary>
         public static int SelectChoice(string[] choices)
         {
-            // Display all the choices
+            int choiceNo = 0;
 
-            DisplayChoices(choices);
+            //Display all the choices
 
-            // Get the user's choice
+            foreach (string choice in choices)
+            {
+                choiceNo++;
+                Console.WriteLine($"|{choiceNo}. {choice}");
+            }
 
-            int choiceNo = (int)InputNumber("\n Please enter your choice > ",
-                                            1, choices.Length);
+            choiceNo = InputNumberWithin(choiceNo - choiceNo + 1, choices.Length);
+
+
             return choiceNo;
         }
+
+
+        /// <summary>
+        /// Aks for an Int number and ensures that only a number can be returned
+        /// </summary>
+        /// <returns>double</returns>
+        public static int InputInt()
+        {
+            int number = 0;
+            bool Isvalid = false;
+
+            do
+            {
+                Console.Write(">");
+                string value = Console.ReadLine();
+
+                try
+                {
+                    number = Convert.ToInt32(value);
+                    Isvalid = true;
+                }
+                catch (Exception)
+                {
+                    Isvalid = false;
+                    Console.WriteLine("Number is INVALID!!");
+                }
+            }
+            while (!Isvalid);
+            return number;
+        }
+
 
         /// <summary>
         /// This displays all the available choices in a numbered
@@ -114,6 +150,35 @@ namespace ConsoleAppProject.Helpers
         }
 
         /// <summary>
+        /// Aks for a double number and ensures that only a number can be returned
+        /// </summary>
+        /// <returns>double</returns>
+        public static double InputNumber()
+        {
+            double number = 0;
+            bool Isvalid = false;
+
+            do
+            {
+                Console.Write(">");
+                string value = Console.ReadLine();
+
+                try
+                {
+                    number = Convert.ToDouble(value);
+                    Isvalid = true;
+                }
+                catch (Exception)
+                {
+                    Isvalid = false;
+                    Console.WriteLine("Number is INVALID!!");
+                }
+            }
+            while (!Isvalid);
+            return number;
+        }
+
+        /// <summary>
         /// Output a short heading in green for the application
         /// and the name of the author and a prompt to
         /// inform the use which units are being converted
@@ -144,61 +209,99 @@ namespace ConsoleAppProject.Helpers
             Console.WriteLine($" {line}");
         }
 
+        public static string InputString(string prompt)
+        {
+            Console.Write(prompt);
+            return Console.ReadLine();
+        }
+
+        /// <summary>
+        /// Returns and Ensures that only a number within a range can be returned
+        /// </summary>
+        /// <param name="from"></param>
+        /// <param name="to"></param>
+        /// <returns>double</returns>
+        public static int InputNumberWithin(int from, int to)
+        {
+            int number;
+            bool Isvalid;
+
+            do
+            {
+                double value = InputNumber();
+
+                number = Convert.ToInt32(value);
+                Isvalid = true;
+
+                if (number < from || number > to)
+                {
+                    Console.WriteLine($"Number must be between {from} and {to} !");
+                    Isvalid = false;
+                }
+            }
+            while (!Isvalid);
+
+            return number;
+        }
+    
+
+
 
         /// <summary>
         /// This method will display a green title underlined
         /// by dashes.
         /// </summary>
         public static void OutputTitle(string title)
-        {
-            Console.ForegroundColor = ConsoleColor.Yellow;
-
-            Console.WriteLine($"\n {title}");
-            Console.Write(" ");
-
-            for (int count = 0; count <= title.Length; count++)
             {
-                Console.Write("-");
+                Console.ForegroundColor = ConsoleColor.Yellow;
+
+                Console.WriteLine($"\n {title}");
+                Console.Write(" ");
+
+                for (int count = 0; count <= title.Length; count++)
+                {
+                    Console.Write("-");
+                }
+
+                Console.WriteLine("\n");
+                Console.ResetColor();
             }
+        
 
-            Console.WriteLine("\n");
-            Console.ResetColor();
-        }
-
-        /// <summary>
-        /// This method will give the user the option to carry
-        /// out another calculation by saying yes or no
-        /// </summary>
-        public static bool WantToRepeat()
-        {
-            bool repeat = true;
-            while (repeat)
+            /// <summary>
+            /// This method will give the user the option to carry
+            /// out another calculation by saying yes or no
+            /// </summary>
+            public static bool WantToRepeat()
             {
-                Console.WriteLine("\n Would you like to choose"
-                    + " another calculation? yes/no? > ");
-                string choice = Console.ReadLine();
-
-                if (choice.ToLower().Contains("y"))
+                bool repeat = true;
+                while (repeat)
                 {
-                    Console.WriteLine(" You have selected yes");
-                    repeat = false;
-                    return true;
-                }
+                    Console.WriteLine("\n Would you like to choose"
+                        + " another calculation? yes/no? > ");
+                    string choice = Console.ReadLine();
 
-                else if (choice.ToLower().Contains("n"))
-                {
-                    Console.WriteLine(" You entered no, exiting the app, thank you!");
-                    repeat = false;
-                    return false;
-                }
+                    if (choice.ToLower().Contains("y"))
+                    {
+                        Console.WriteLine(" You have selected yes");
+                        repeat = false;
+                        return true;
+                    }
 
-                else
-                {
-                    Console.WriteLine(" Error: invalid input. Please try again");
+                    else if (choice.ToLower().Contains("n"))
+                    {
+                        Console.WriteLine(" You entered no, exiting the app, thank you!");
+                        repeat = false;
+                        return false;
+                    }
+
+                    else
+                    {
+                        Console.WriteLine(" Error: invalid input. Please try again");
+                    }
                 }
+                return false;
+
             }
-            return false;
-
         }
     }
-}

@@ -20,39 +20,43 @@ namespace ConsoleAppProject.App04
     ///</author> 
     public class NewsFeed
     {
-        public const string AUTHOR = "Evan";
-        private readonly List<Post> posts;
+        public readonly List<Post> posts;
 
+        public Boolean ErrorDetected = false;
 
         ///<summary>
-        /// Construct an empty news feed.
+        /// Construct an news feed with 4 example posts
         ///</summary>
         public NewsFeed()
         {
             posts = new List<Post>();
-            MessagePost post = new MessagePost(AUTHOR, "Hello world");
+
+            MessagePost post = new MessagePost("Evan", "This is the very first Evan's post(beta)");
             AddMessagePost(post);
 
-            PhotoPost photoPost = new PhotoPost(AUTHOR, "Photo.jpg", "this is a photo");
+            PhotoPost photoPost = new PhotoPost("Evan", "NewsFeedPhoto1.jpg", "Omg i just posted my first pic");
             AddPhotoPost(photoPost);
+
+            MessagePost post2 = new MessagePost("Evan", "This post is No 2");
+            AddMessagePost(post2);
+
+            MessagePost post3 = new MessagePost("Evan", "hello world i have completed my work");
+            AddMessagePost(post3);
         }
-
-
-
 
         ///<summary>
         /// Add a text post to the news feed.
-        /// 
+        ///
         /// @param text  The text post to be added.
         ///</summary>
-        public void AddMessagePost(Post message)
+        public void AddMessagePost(MessagePost message)
         {
             posts.Add(message);
         }
 
         ///<summary>
         /// Add a photo post to the news feed.
-        /// 
+        ///
         /// @param photo  The photo post to be added.
         ///</summary>
         public void AddPhotoPost(PhotoPost photo)
@@ -66,192 +70,150 @@ namespace ConsoleAppProject.App04
         ///</summary>
         public void Display()
         {
+            int i = 1;
+
             // display all text posts
             foreach (Post post in posts)
             {
+                Console.WriteLine($"Post nº:[{i}]");
                 post.Display();
                 Console.WriteLine();   // empty line between posts
-            }
-
-
-
-
-        }
-
-        /// <summary>
-        /// Finds and removes post from list of posts.
-        /// </summary>
-        /// <param name="id"></param>
-        public void RemovePost(int id)
-        {
-            Post post = FindPost(id);
-
-            if (post == null)
-            {
-                Console.WriteLine("Post with id: ", id, " does not exist");
-            }
-            else
-            {
-                Console.WriteLine("This post has been removed: ");
-
-                if (post is MessagePost mp)
-                {
-                    mp.Display();
-                }
-                else if (post is PhotoPost pp)
-                {
-                    pp.Display();
-                }
-
-                posts.Remove(post);
+                Console.WriteLine("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|");
+                Console.WriteLine();
+                i++;
             }
         }
 
         /// <summary>
-        /// Finds post by id
+        /// adds a comment to an existing post
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public Post FindPost(int id)
+        /// <param name="postNo"></param>
+        /// <param name="comment"></param>
+        public void CommentOnPost(int postNo, string comment)
         {
+            int i = 0;
+
             foreach (Post post in posts)
             {
-                if (post.Postid == id)
+                if (postNo == i + 1)
                 {
-                    return post;
+                    post.AddComment(comment);
+                    break;
                 }
-            }
-
-            return null;
-        }
-
-        /// <summary>
-        /// Displays posts for particular author
-        /// </summary>
-        /// <param name="username"></param>
-        public void DisplayAuthor(string username)
-        {
-            Post post = FindAuthor(username);
-
-            if (post == null)
-            {
-                Console.WriteLine("No posts from", username, " exist.");
-            }
-            else
-            {
-                Console.WriteLine("Displaying all posts from ", username);
-                post.Display();
+                i++;
             }
         }
 
         /// <summary>
-        /// Searches for a posts from particular author
+        /// returns a List of posts that have a matching author
         /// </summary>
-        /// <param name="username"></param>
-        /// <returns></returns>
-        public Post FindAuthor(string username)
+        /// <param name="author"></param>
+        /// <returns>List(Post)</returns>
+        public List<Post> SearchByAuthor(string author)
         {
+            List<Post> searchResults = new List<Post>();
+
             foreach (Post post in posts)
             {
-                if (post.Username == username)
+                if (author.ToLower().Equals(post.Username.ToLower()))
                 {
-                    return post;
+                    searchResults.Add(post);
                 }
             }
 
-            return null;
+            return searchResults;
         }
 
         /// <summary>
-        /// Likes post with particular id
+        /// removes a post based on its PostNº
         /// </summary>
-        /// <param name="id"></param>
-        public void LikePost(int id)
+        /// <param name="postNo"></param>
+        public void RemovePost(int postNo)
         {
-            Post post = FindPost(id);
+            int i = 0;
+            bool postRemoved = false;
 
-            if (post == null)
-            {
-                Console.WriteLine("Post with id ", id, " does not exist.");
-            }
-            else
-            {
-                Console.WriteLine("Post has been liked.");
-                post.Like();
-                post.Display();
-            }
-        }
+            ErrorDetected = false;
 
-        /// <summary>
-        /// Adds a comment to a post with particular id
-        /// </summary>
-        /// <param name="id"></param>
-        public void AddComment(int id)
-        {
-            Post post = FindPost(id);
-
-            if (post == null)
-            {
-                Console.WriteLine("Post with id ", id, " does not exist.");
-            }
-            else
-            {
-                Console.WriteLine("Adding a comment...");
-                Console.Write("Please enter your comment: ");
-                string text = Console.ReadLine();
-                post.AddComment(text);
-            }
-        }
-
-        /// <summary>
-        /// Displays all posts for particular time.
-        /// </summary>
-        /// <param name="time"></param>
-        public void DisplayByTime(int time)
-        {
-            Post post = FindTime(time);
-
-            if (post == null)
-            {
-                Console.WriteLine("No posts in this period", time, "seconds; exist.");
-            }
-            else
-            {
-                Console.WriteLine("Displaying all posts for this period ", time, "seconds");
-                post.Display();
-            }
-        }
-
-        /// <summary>
-        /// Searches for posts made in particular time.
-        /// </summary>
-        /// <param name="time"></param>
-        /// <returns></returns>
-        public Post FindTime(int time)
-        {
             foreach (Post post in posts)
             {
-                DateTime current = DateTime.Now;
-                TimeSpan timePast = current - post.Timestamp;
-                int seconds = (Int32)timePast.TotalSeconds;
-
-                if (seconds <= time)
+                if (postNo == i + 1)
                 {
-                    return post;
+                    posts.Remove(post);
+                    Console.WriteLine($"PostNº [{postNo}] removed");
+                    Console.WriteLine();
+                    postRemoved = true;
+                    break;
                 }
+                i++;
             }
 
-            return null;
+            if (!postRemoved)//not sure it this validation is necessary
+            {
+                Console.WriteLine($"PostNº [{postNo}] not found!");
+                ErrorDetected = true;
+            }
         }
 
-        ///<summary>
-        /// Add a text post to the news feed.
-        /// 
-        /// @param text  The text post to be added.
-        ///</summary>
-        public void AddMessagePost(MessagePost message)
+        /// <summary>
+        /// adds a Like to a post
+        /// </summary>
+        /// <param name="postNo"></param>
+        public void LikePost(int postNo)
         {
-            posts.Add(message);
+            int i = 0;
+            bool postLiked = false;
+
+            ErrorDetected = false;
+
+            foreach (Post post in posts)
+            {
+                if (postNo == i + 1)
+                {
+                    post.Like();
+                    Console.WriteLine($"PostNº [{postNo}] liked");
+                    Console.WriteLine();
+                    postLiked = true;
+                    break;
+                }
+                i++;
+            }
+
+            if (!postLiked)//not sure it this validation is necessary
+            {
+                Console.WriteLine($"PostNº [{postNo}] not found!");
+                ErrorDetected = true;
+            }
+        }
+        /// <summary>
+        /// Unlikes a post
+        /// </summary>
+        /// <param name="postNo"></param>
+        public void UnlikePost(int postNo)
+        {
+            int i = 0;
+            bool unlikedPost = false;
+
+            ErrorDetected = false;
+
+            foreach (Post post in posts)
+            {
+                if (postNo == i + 1)
+                {
+                    post.Unlike();
+                    Console.WriteLine($"PostNº [{postNo}] UN-liked");
+                    Console.WriteLine();
+                    unlikedPost = true;
+                    break;
+                }
+                i++;
+            }
+
+            if (!unlikedPost)//not sure it this validation is necessary
+            {
+                Console.WriteLine($"PostNº [{postNo}] not found!");
+                ErrorDetected = true;
+            }
         }
     }
 }

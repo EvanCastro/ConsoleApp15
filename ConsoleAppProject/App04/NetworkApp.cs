@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using ConsoleAppProject.Helpers;
 
 namespace ConsoleAppProject.App04
@@ -10,164 +11,189 @@ namespace ConsoleAppProject.App04
     {
        private NewsFeed news = new NewsFeed();
 
+        Boolean ErrorDetected = false;
+
 
 
         public void DisplayMenu()
         {
-            ConsoleHelper.OutputHeading("Evan's Daily");
+            ConsoleHelper.OutputHeading(" Evan's News feed  ");
 
             string[] choices = new string[]
             {
-                "Post Message", "Post Image", "Display All Posts","Remove Post","Display by Author", "Display by Time",
-                "Add comment", "Like Post", "Quit"
+                "Post Message", "Post Image", "Display All Posts"
+                ,"Comment", "Search by author","Remove post", "Like post", "Unlike post", "Quit"
             };
 
-            bool wantToQuit = false;
+            bool finished = false;
+
             do
             {
-                int choice = ConsoleHelper.SelectChoice(choices);
-                switch (choice)
+                int amountOfPosts = news.posts.Count;
+
+                switch (ConsoleHelper.SelectChoice(choices))
                 {
-                    case 1: PostMessage(); break;
-                    case 2: PostPhoto(); break;
-                    case 3: DisplayAll(); break;
-                    case 4: RemovePost(); break;
-                    case 5: DisplayByAuthor(); break;
-                    case 6: DisplayByTime(); break;
-                    case 7: AddComment(); break;
-                    case 8: LikePost(); break;
-                    case 9 : wantToQuit = true; break;
+                    case 1:
+                        PostMessage(ConsoleHelper.InputString("Author:"), ConsoleHelper.InputString("Message:"));
+                        break;
+
+                    case 2:
+                        PostImage(ConsoleHelper.InputString("Author:"), ConsoleHelper.InputString("File:"), ConsoleHelper.InputString("Caption:"));
+                        break;
+
+                    case 3:
+                        if (amountOfPosts < 1)
+                        {
+                            Console.WriteLine("No posts to display");
+                        }
+                        else
+                        {
+                            DisplayAll();
+                        }
+                        break;
+
+                    case 4:
+                        Console.Write("PostNº you would like to comment on:");
+                        Comment(ConsoleHelper.InputNumberWithin(1, amountOfPosts), ConsoleHelper.InputString("Comment:"));
+                        break;
+
+                    case 5:
+                        SearchByAuthor(ConsoleHelper.InputString("Search for:"));
+                        break;
+
+                    case 6:
+                        Console.Write("PostNº to remove:");
+                        RemovePost(ConsoleHelper.InputNumberWithin(1, amountOfPosts));
+                        break;
+
+                    case 7:
+                        Console.WriteLine("PostNº to Like:");
+                        LikePost(ConsoleHelper.InputNumberWithin(1, amountOfPosts));
+                        break;
+
+                    case 8:
+                        Console.WriteLine("PostNº to Unlike:");
+                        UnlikePost(ConsoleHelper.InputNumberWithin(1, amountOfPosts));
+                        break;
+
+                    case 9:
+                        finished = true;
+                        break;
+
+
                 }
-
-            } while (!wantToQuit);
-
+            }
+            
+            while (!finished);
         }
 
 
-
+        /// <summary>
+        /// Displays all the posts from the feed
+        /// </summary>
         private void DisplayAll()
         {
             news.Display();
-
         }
 
-        private void PostPhoto()
+        /// <summary>
+        /// post an  image to the feed
+        /// </summary>
+        private void PostImage(string author, string filename, string caption)
         {
-            ///Get user to type this information
-            PhotoPost photoPost = new PhotoPost("Evan", "Photo.jpg", "Hello World");
+            PhotoPost photoPost = new PhotoPost(author, filename, caption);
+
             news.AddPhotoPost(photoPost);
-            Console.WriteLine("Posting an Image...\n");
-
-            Console.Write("Type your username: ");
-            string author = Console.ReadLine();
-
-            Console.Write("Please enter your image filename: ");
-            string filename = Console.ReadLine();
-
-            Console.Write("Please enter your image caption: ");
-            string caption = Console.ReadLine();
-
-            PhotoPost post = new PhotoPost(author, filename, caption);
-            news.AddPhotoPost(photoPost);
-
-            Console.WriteLine("You have succesfully posted a photo.\n");
-            post.Display();
-
-
+            Console.WriteLine();
+            Console.WriteLine("Photo posted successfully!");
+            Console.WriteLine();
         }
 
-        private void PostMessage()
+
+
+        /// <summary>
+        /// post a message to the feed
+        /// </summary>
+        private void PostMessage(string author, string message)
         {
-            ///User to enter information - placeholder for now
-            Console.WriteLine("Posting a message...\n");
+            MessagePost newPost = new MessagePost(author, message);
 
-            Console.Write("Type your username: ");
-            string author = Console.ReadLine();
-
-            Console.Write("Please enter your message: ");
-            string message = Console.ReadLine();
-
-            MessagePost post = new MessagePost(author, message);
-            news.AddMessagePost(post);
-
-            Console.WriteLine("You have succesfully posted a message.\n");
-
-            post.Display();
+            news.AddMessagePost(newPost);
+            Console.WriteLine();
+            Console.WriteLine("Post posted successfully!");
+            Console.WriteLine();
         }
 
         /// <summary>
-        /// Removes post.
+        /// adds a comment to a post 
         /// </summary>
-        private void RemovePost()
+        /// <param name="postNo"></param>
+        /// <param name="comment"></param>
+        private void Comment(int postNo, string comment)
         {
-            Console.WriteLine("Removing a post...\n");
-
-            Console.Write("Please enter your post id: \n");
-
-            string value = Console.ReadLine();
-
-            int id = Convert.ToInt32(value);
-
-            news.RemovePost(id);
+            news.CommentOnPost(postNo, comment);
         }
 
         /// <summary>
-        /// Displays 1 author's posts
+        /// searchs for posts from a given author
         /// </summary>
-        private void DisplayByAuthor()
+        /// <param name="author"></param>
+        public void SearchByAuthor(string author)
         {
-            Console.WriteLine("Displaying authors posts...\n");
+            List<Post> searchResults = news.SearchByAuthor(author);//places the found posts into a list
 
-            Console.Write("Please enter authors username: \n");
+            ErrorDetected = false;
 
-            string username = Console.ReadLine();
+            if (searchResults.Count > 0)
+            {
+                Console.WriteLine();
+                Console.WriteLine($"Found {searchResults.Count} result(s) for {author}");
+                Console.WriteLine();
 
-            news.DisplayAuthor(username);
-        }
-        /// <summary>
-        /// Displays all posts for particular time
-        /// </summary>
-        private void DisplayByTime()
-        {
-            Console.WriteLine("Displaying posts by time...\n");
-
-            Console.Write("Please enter time elapsed (in seconds) for a post: \n");
-
-            string value = Console.ReadLine();
-
-            int time = Convert.ToInt32(value);
-
-            news.DisplayByTime(time);
-        }
-
-        /// <summary>
-        /// Adds a comment to post
-        /// </summary>
-        private void AddComment()
-        {
-            Console.WriteLine("Adding a comment...\n");
-
-            Console.Write("Please enter post id: \n");
-
-            string value = Console.ReadLine();
-
-            int id = Convert.ToInt32(value);
-
-            news.AddComment(id);
+                foreach (Post post in searchResults)
+                {
+                    post.Display();
+                    Console.WriteLine();   // empty line between posts
+                    Console.WriteLine("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|");
+                    Console.WriteLine();
+                }
+            }
+            else
+            {
+                Console.WriteLine("-----------------------------");
+                Console.WriteLine($"NO RESULTS FOUND FOR:[ {author} ]!");
+                Console.WriteLine("-----------------------------");
+                Console.WriteLine();
+                ErrorDetected = true;
+            }
         }
 
+
         /// <summary>
-        /// Adds a like to a post.
+        /// removes a post from the newsfeed
         /// </summary>
-        private void LikePost()
+        /// <param name="postNo"></param>
+        private void RemovePost(int postNo)
         {
-            Console.Write("Please enter post id: \n");
+            news.RemovePost(postNo);
+        }
 
-            string value = Console.ReadLine();
+        /// <summary>
+        /// Likes a post
+        /// </summary>
+        /// <param name="postNo"></param>
+        private void LikePost(int postNo)
+        {
+            news.LikePost(postNo);
+        }
 
-            int id = Convert.ToInt32(value);
-
-            news.LikePost(id);
+        /// <summary>
+        /// Unlikes a post
+        /// </summary>
+        /// <param name="postNo"></param>
+        private void UnlikePost(int postNo)
+        {
+            news.UnlikePost(postNo);
         }
     }
 }
