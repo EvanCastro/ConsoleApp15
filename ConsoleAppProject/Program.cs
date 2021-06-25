@@ -20,8 +20,6 @@ namespace ConsoleAppProject
     {
         private static int choice;
 
-        public static RPSGame App06 { get; private set; }
-
         public static void Main(string[] args)
         {
             Console.Clear();

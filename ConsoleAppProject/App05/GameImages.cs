@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ConsoleAppProject.App05
+namespace ConsoleAppProject.App
 {
     /// <summary>
     /// This class has a set of method that will draw out

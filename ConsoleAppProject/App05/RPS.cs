@@ -42,7 +42,7 @@ namespace ConsoleAppProject.App05
                 name = Console.ReadLine();
 
                 Console.WriteLine("How many rounds would you like to play?");
-                int rounds = GetDesiredRounds();
+                int rounds = GetNumberoOfRounds();
 
                 for (var round = 1; round <= rounds; round++)
                 {
@@ -98,7 +98,7 @@ namespace ConsoleAppProject.App05
         /// puts out error message for non numerical characters
         /// </summary>
         /// <returns></returns>
-        public static int GetDesiredRounds()
+        public static int GetNumberoOfRounds()
         {
             int result;
             do
