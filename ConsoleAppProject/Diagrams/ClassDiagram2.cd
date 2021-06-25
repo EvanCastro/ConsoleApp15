@@ -1,2 +1,32 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ClassDiagram /> 
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="ConsoleAppProject.App05.RPSGame">
+    <Position X="2.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAECgAAAAAAEAAAAAAAgAAAGAAKAAABgAAAAAAo=</HashCode>
+      <FileName>App05\RPS.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ConsoleAppProject.App.GameImages">
+    <Position X="8" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAggAAAAAAIAAgAAAAAAAAAAAAIBAAAAAAA=</HashCode>
+      <FileName>App05\GameImages.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="ConsoleAppProject.App05.Choice">
+    <Position X="4.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAEAAAAAAAEAAAAAAAAAAAAAAAAAgAAAAAAE=</HashCode>
+      <FileName>App05\RSPenum.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="ConsoleAppProject.App05.Result">
+    <Position X="6" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAABAAAACAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>App05\RSPenum.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
