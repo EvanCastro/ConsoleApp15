@@ -2,6 +2,7 @@
 using ConsoleAppProject.App02;
 using ConsoleAppProject.App03;
 using ConsoleAppProject.App04;
+using ConsoleAppProject.App05;
 using ConsoleAppProject.Helpers;
 using System;
 
@@ -18,6 +19,9 @@ namespace ConsoleAppProject
     public static class Program
     {
         private static int choice;
+
+        public static RPSGame App06 { get; private set; }
+
         public static void Main(string[] args)
         {
             Console.Clear();
@@ -32,7 +36,8 @@ namespace ConsoleAppProject
                 "Distance Coverter",
                 "BMI Calculator",
                 "Student Grades",
-                "Social Network"
+                "Social Network",
+                "RSP Game"
             };
 
             ConsoleHelper.OutputTitle("Please select the application you wish to use ");
@@ -58,7 +63,11 @@ namespace ConsoleAppProject
                 NetworkApp App04 = new NetworkApp();
                 App04.DisplayMenu();
             }
-
+            else if (choice == 5)
+            {
+                RPSGame game = new RPSGame();
+                game.Run();
+            }
         }
     }
 }

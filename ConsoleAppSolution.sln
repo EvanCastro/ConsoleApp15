@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleAppProject", "ConsoleAppProject\ConsoleAppProject.csproj", "{C0C498FD-1AE4-4CE0-A050-C1E08874D1C5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleAppProjectTests", "ConsoleAppProjectTests\ConsoleAppProjectTests.csproj", "{63AA6DE9-CAA4-4484-BC5D-4E3159C78D70}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleAppProjectTests", "ConsoleAppProjectTests\ConsoleAppProjectTests.csproj", "{63AA6DE9-CAA4-4484-BC5D-4E3159C78D70}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

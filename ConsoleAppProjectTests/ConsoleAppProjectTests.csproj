@@ -7,6 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="App04\**" />
+    <EmbeddedResource Remove="App04\**" />
+    <None Remove="App04\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.9.4" />
     <PackageReference Include="MSTest.TestAdapter" Version="2.2.3" />
     <PackageReference Include="MSTest.TestFramework" Version="2.2.3" />
@@ -21,7 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="App04\" />
+    <Folder Include="App03\App06\" />
   </ItemGroup>
 
 </Project>
